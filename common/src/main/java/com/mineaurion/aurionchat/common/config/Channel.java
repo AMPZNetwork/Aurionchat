@@ -11,6 +11,7 @@ public class Channel {
         this.format = format;
         this.alias = alias;
         this.urlMode = urlMode;
+        this.publish = publish;
     }
 
     public Channel(String format, String alias, URL_MODE urlMode, boolean publish){
