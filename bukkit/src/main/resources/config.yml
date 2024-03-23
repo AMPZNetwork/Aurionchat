@@ -18,6 +18,7 @@ channels:
     alias: "inf"
     url_mode: ["ALLOW"] # check https://github.com/Mineaurion/Aurionchat/#url-mode for reference
     markdown: false
+    publish: true
   revelation:
     format: "[&5R&f] {prefix}{display_name} : &f{message}"
     alias: "reve"

@@ -2,6 +2,7 @@ package com.mineaurion.aurionchat.bukkit.listeners;
 
 import com.mineaurion.aurionchat.bukkit.AurionChat;
 import com.mineaurion.aurionchat.common.AurionChatPlayer;
+import com.mineaurion.aurionchat.common.ChatService;
 import com.mineaurion.aurionchat.common.Utils;
 import com.mineaurion.aurionchat.common.config.Channel;
 import com.mineaurion.aurionchat.common.config.ConfigurationAdapter;
@@ -45,7 +46,10 @@ public class ChatListener implements Listener {
         );
 
         try{
-            plugin.getChatService().send(currentChannel, messageFormat);
+            ChatService chatService = plugin.getChatService();
+            if (channel.publish)
+                chatService.send(currentChannel, messageFormat);
+            else chatService.deliver(currentChannel, messageFormat);
         }
         catch(IOException e){
             Bukkit.getConsoleSender().sendMessage(e.getMessage());

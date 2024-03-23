@@ -25,4 +25,5 @@ public class Channel {
     public String alias;
     public List<URL_MODE> urlMode;
     public boolean markdown;
+    public boolean publish;
 }
