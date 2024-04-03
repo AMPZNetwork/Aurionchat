@@ -62,7 +62,7 @@ subprojects { subProject ->
 
 def urls = [
         [
-                url: "https://download.getbukkit.org/spigot/spigot-1.20.4.jar",
+                url: "https://download.getbukkit.org/spigot/spigot-1.20.1.jar",
                 folder: 'spigot-1.20',
         ],
         [
@@ -70,7 +70,7 @@ def urls = [
                 folder: "arclight"
         ],
         [
-                url: "https://serverjars.com/api/fetchJar/modded/fabric/1.20.4",
+                url: "https://serverjars.com/api/fetchJar/modded/fabric/1.20.1",
                 folder: "fabric-1.20"
         ]
 ]
