@@ -5,19 +5,42 @@ options:
   spy: true
   automessage: true
   sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
-  #sound: "ORB_PICKUP" #1.7
-
 
 channels:
+  # an example channel to demonstrate message formatting configuration
   global:
-    format: "[GLOBAL] {prefix}{display_name} : &f{message}"
     alias: "g"
-    url_mode: ["ALLOW"] # check https://github.com/Mineaurion/Aurionchat/#url-mode for reference
+    # a set of message formatter features to enable for packets
+    formatting:
+      # converts common markdown to minecraft formatting. all non-wip parameters default to true
+      markdown:
+        enable: true
+        hyperlinks: false # enable to allow [markdown hyperlinks](https://www.markdownguide.org/cheat-sheet/)
+        codeblocks: false # enable to allow codeblocks (WIP)
+
+      # parses URLs and adds them as clickEvent features. by default; only
+      urls:
+        enable: true
+        requireProtocol: false # enable to require urls to begin with 'https?://'
+        printDomainOnly: false # enable to only display domain names
+        forceHttps: true # enable to enforce secure protocol for urls
+        redact: false # enable to redact all URLs
+
+      # [required] a parsing scheme for ingame display -- todo: placeholder api
+      scheme: "[GLOBAL] {prefix}{display_name}&f: {message}"
+
+  # an example channel where no URLs are allowed
   infinity:
-    format: "[&6I&f] {prefix}{display_name} : &f{message}"
     alias: "inf"
-    url_mode: ["ALLOW"] # check https://github.com/Mineaurion/Aurionchat/#url-mode for reference
+    formatting:
+      urls:
+          redact: true
+      scheme: "[&6I&f] {prefix}{display_name} : &f{message}"
+
+  # an example channel where markdown text decoration is ignored
   revelation:
-    format: "[&5R&f] {prefix}{display_name} : &f{message}"
     alias: "reve"
-    url_mode: ["ALLOW"] # check https://github.com/Mineaurion/Aurionchat/#url-mode for reference
+    formatting:
+      markdown:
+          enable: false
+      scheme: "[&5R&f] {prefix}{display_name} : &f{message}"
