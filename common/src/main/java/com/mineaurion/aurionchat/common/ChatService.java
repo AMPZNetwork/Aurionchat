@@ -85,11 +85,11 @@ public class ChatService {
 
             plugin.getAurionChatPlayers().forEach((uuid, aurionChatPlayers) -> {
                 if(packet.getType().equals(AurionPacket.Type.AUTO_MESSAGE) && this.config.getBoolean("options.automessage", false)){
-                    if(aurionChatPlayers.hasPermission("aurionchat.automessage." + packet.getChannel())){
+                    if(aurionChatPlayers.hasPermission("aurionchat.automessage." + packet.getChannelName())){
                         aurionChatPlayers.sendMessage(messageDeserialize);
                     }
                 } else if (packet.getType().equals(AurionPacket.Type.CHAT)) {
-                    if(aurionChatPlayers.getChannels().contains(packet.getChannel())){
+                    if(aurionChatPlayers.getChannels().contains(packet.getChannelName())){
                         aurionChatPlayers.sendMessage(messageDeserialize);
                     }
                 } else {

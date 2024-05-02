@@ -21,11 +21,11 @@ public final class AurionPacket implements Named, Serializable {
         return new Builder();
     }
 
-    public AurionPacket(Type type, String source, @Nullable AurionPlayer player, @Nullable String channel, @Nullable String displayName, @NotNull String tellRawData) {
+    public AurionPacket(Type type, String source, @Nullable AurionPlayer player, @Nullable String channelName, @Nullable String displayName, @NotNull String tellRawData) {
         this.type = type;
         this.source = source;
         this.player = player;
-        this.channel = channel;
+        this.channelName = channelName;
         this.displayName = displayName;
         this.displayString = getStringFromComponent(getComponent());
         this.tellRawData = tellRawData;
@@ -67,7 +67,7 @@ public final class AurionPacket implements Named, Serializable {
      * Channel name
      */
     @Nullable
-    private final String channel;
+    private final String channelName;
 
     /**
      * Display name of sender (one of: player name, automessage title)
@@ -153,8 +153,8 @@ public final class AurionPacket implements Named, Serializable {
         return this.player;
     }
 
-    public @Nullable String getChannel() {
-        return this.channel;
+    public @Nullable String getChannelName() {
+        return this.channelName;
     }
 
     public @NotNull String getDisplayString(){
@@ -170,7 +170,7 @@ public final class AurionPacket implements Named, Serializable {
                 .type(this.type)
                 .source(this.source)
                 .player(this.player)
-                .channel(this.channel)
+                .channel(this.channelName)
                 .displayName(this.displayName)
                 .tellRawData(this.tellRawData)
         ;

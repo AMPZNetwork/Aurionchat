@@ -1,27 +1,17 @@
 package com.mineaurion.aurionchat.common.config;
 
-import com.mineaurion.aurionchat.common.Utils.URL_MODE;
+import com.mineaurion.aurionchat.common.message.MessageProcessor;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Channel {
+    private final String name;
+    private final String alias;
+    private final List<MessageProcessor<?>> formatting;
 
-    public Channel(String format, String alias, List<URL_MODE> urlMode){
-        this.format = format;
+    public Channel(String name, String alias, List<MessageProcessor<?>> formatting) {
+        this.name = name;
         this.alias = alias;
-        this.urlMode = urlMode;
+        this.formatting = formatting;
     }
-
-    public Channel(String format, String alias, URL_MODE urlMode){
-        this(
-                format,
-                alias,
-                Collections.singletonList(urlMode)
-        );
-    }
-
-    public String format;
-    public String alias;
-    public List<URL_MODE> urlMode;
 }
