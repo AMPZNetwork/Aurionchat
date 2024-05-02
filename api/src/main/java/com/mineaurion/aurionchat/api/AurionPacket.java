@@ -98,14 +98,14 @@ public final class AurionPacket implements Named, Serializable {
         return gson().deserialize(tellRawData);
     }
 
-    public static String getStringFromComponent(Component component){
+    public static String getStringFromComponent(Component component) {
         StringBuilder content = new StringBuilder();
 
-        if(!component.children().isEmpty()){
-            component.children().forEach( child -> content.append(getStringFromComponent(child)));
+        if (!component.children().isEmpty()) {
+            component.children().forEach(child -> content.append(getStringFromComponent(child)));
         }
 
-        if(component instanceof TextComponent){
+        if (component instanceof TextComponent) {
             content.append(((TextComponent) component).content());
         }
         // todo: support other types
@@ -124,7 +124,7 @@ public final class AurionPacket implements Named, Serializable {
         return gson.toJson(this);
     }
 
-    public static AurionPacket fromJson(String jsonString){
+    public static AurionPacket fromJson(String jsonString) {
         return gson.fromJson(jsonString, AurionPacket.class);
     }
 
@@ -157,7 +157,7 @@ public final class AurionPacket implements Named, Serializable {
         return this.channelName;
     }
 
-    public @NotNull String getDisplayString(){
+    public @NotNull String getDisplayString() {
         return this.displayString;
     }
 
@@ -173,7 +173,7 @@ public final class AurionPacket implements Named, Serializable {
                 .channel(this.channelName)
                 .displayName(this.displayName)
                 .tellRawData(this.tellRawData)
-        ;
+                ;
     }
 
     public enum Type {
@@ -224,6 +224,30 @@ public final class AurionPacket implements Named, Serializable {
         public Builder tellRawData(@NotNull String tellRawData) {
             this.tellRawData = tellRawData;
             return this;
+        }
+
+        public Type getType() {
+            return type;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public AurionPlayer getPlayer() {
+            return player;
+        }
+
+        public String getChannel() {
+            return channel;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public String getTellRawData() {
+            return tellRawData;
         }
 
         public AurionPacket build() {

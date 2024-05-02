@@ -2,12 +2,24 @@ package com.mineaurion.aurionchat.common.message;
 
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.intellij.lang.annotations.MagicConstant;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.stream.Stream;
 
 public final class Message {
+    public static final String FT_UNPROCESSED = "unprocessed";
+    public static final String FT_USERNAME = "username";
+    public static final String FT_DISPLAYNAME = "displayname";
+    public static final String FT_URL = "url";
+    public static final String FT_MARKDOWN = "markdown";
+    public static final String FT_MESSAGE = "message";
     public final List<Component> components = new ArrayList<>();
+
+    public Stream<Component> features(@MagicConstant(valuesFromClass = Message.class) String type) {
+        return components.stream().filter(component -> component.features.contains(type));
+    }
 
     public static final class Component implements Cloneable {
         public final Set<String> features = new HashSet<>();

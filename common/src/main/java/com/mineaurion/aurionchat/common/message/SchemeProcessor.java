@@ -1,5 +1,6 @@
 package com.mineaurion.aurionchat.common.message;
 
+import com.mineaurion.aurionchat.api.AurionPacket;
 import com.mineaurion.aurionchat.common.config.MessageProcessorConfig;
 
 public class SchemeProcessor extends MessageProcessor<MessageProcessorConfig.SchemeConverter> {
@@ -8,7 +9,8 @@ public class SchemeProcessor extends MessageProcessor<MessageProcessorConfig.Sch
     }
 
     @Override
-    public Message apply(Message message) {
-        return message;
+    public void accept(Message message, AurionPacket.Builder packet) {
+        if (!config.isEnabled())
+            return;
     }
 }

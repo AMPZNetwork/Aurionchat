@@ -1,12 +1,27 @@
 package com.mineaurion.aurionchat.common.config;
 
+import com.mineaurion.aurionchat.common.message.MarkdownMessageProcessor;
+import com.mineaurion.aurionchat.common.message.MessageProcessor;
+import com.mineaurion.aurionchat.common.message.SchemeProcessor;
+import com.mineaurion.aurionchat.common.message.UrlMessageProcessor;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 public abstract class MessageProcessorConfig {
     public static final Map<String, MessageProcessorConfig.Factory<?>> REGISTRY = new ConcurrentHashMap<>();
-    private boolean enable = true;
+    private boolean enabled = true;
+
+    public abstract MessageProcessor<?> createMessageProcessor();
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public static final class Factory<T extends MessageProcessorConfig> {
         private final Class<T> type;
@@ -82,6 +97,11 @@ public abstract class MessageProcessorConfig {
         public void setItalic(boolean italic) {
             this.italic = italic;
         }
+
+        @Override
+        public MarkdownMessageProcessor createMessageProcessor() {
+            return new MarkdownMessageProcessor(this);
+        }
     }
 
     public static final class UrlConverter extends MessageProcessorConfig {
@@ -127,6 +147,11 @@ public abstract class MessageProcessorConfig {
         public void setRedact(boolean redact) {
             this.redact = redact;
         }
+
+        @Override
+        public UrlMessageProcessor createMessageProcessor() {
+            return new UrlMessageProcessor(this);
+        }
     }
 
     public static final class SchemeConverter extends MessageProcessorConfig {
@@ -144,6 +169,11 @@ public abstract class MessageProcessorConfig {
 
         public void setScheme(String scheme) {
             this.scheme = scheme;
+        }
+
+        @Override
+        public SchemeProcessor createMessageProcessor() {
+            return new SchemeProcessor(this);
         }
     }
 }
