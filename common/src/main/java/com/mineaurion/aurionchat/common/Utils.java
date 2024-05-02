@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Deprecated
 public class Utils {
     private static final Pattern URL_PATTERN = Pattern.compile("(?xi) # comments and case insensitive \n" +
             "(.*?)( # prepend least possible of anything and group actual result \n" +
