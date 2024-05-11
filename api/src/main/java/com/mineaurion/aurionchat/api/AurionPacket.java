@@ -2,6 +2,7 @@ package com.mineaurion.aurionchat.api;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.mineaurion.aurionchat.api.model.Message;
 import com.mineaurion.aurionchat.api.model.Named;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -21,14 +22,13 @@ public final class AurionPacket implements Named, Serializable {
         return new Builder();
     }
 
-    public AurionPacket(Type type, String source, @Nullable AurionPlayer player, @Nullable String channelName, @Nullable String displayName, @NotNull String tellRawData) {
+    public AurionPacket(Type type, String source, @Nullable AurionPlayer player, @Nullable String channelName, @Nullable String displayName, @NotNull Message message) {
         this.type = type;
         this.source = source;
         this.player = player;
         this.channelName = channelName;
         this.displayName = displayName;
-        this.displayString = getStringFromComponent(getComponent());
-        this.tellRawData = tellRawData;
+        this.message = message;
     }
 
     public static Builder chat(AurionPlayer player, Object tellRaw) {
@@ -76,27 +76,18 @@ public final class AurionPacket implements Named, Serializable {
     private final String displayName;
 
     /**
-     * Only the string of the message without any colors or stuff from the game
+     * Processed Message
      */
     @NotNull
-    private final String displayString;
-
-    /**
-     * What ingame players see
-     */
-    @NotNull
-    private final String tellRawData;
+    private final Message message;
 
     /**
      * What to display in plaintext environments
      */
     public String getRawDisplay() {
-        return displayName + ' ' + type.name().toLowerCase() + displayString;
+        return displayName + ' ' + type.name().toLowerCase() + message.features(Message.FT_MESSAGE);
     }
 
-    public Component getComponent() {
-        return gson().deserialize(tellRawData);
-    }
 
     public static String getStringFromComponent(Component component) {
         StringBuilder content = new StringBuilder();
@@ -157,12 +148,8 @@ public final class AurionPacket implements Named, Serializable {
         return this.channelName;
     }
 
-    public @NotNull String getDisplayString() {
-        return this.displayString;
-    }
-
-    public @NotNull String getTellRawData() {
-        return this.tellRawData;
+    public Message getMessage() {
+        return message;
     }
 
     public Builder toBuilder() {
@@ -194,7 +181,7 @@ public final class AurionPacket implements Named, Serializable {
         private @Nullable AurionPlayer player;
         private @Nullable String channel;
         private @Nullable String displayName;
-        private @NotNull String tellRawData = "";
+        private @NotNull Message message;
 
         public Builder type(Type type) {
             this.type = type;
@@ -221,8 +208,8 @@ public final class AurionPacket implements Named, Serializable {
             return this;
         }
 
-        public Builder tellRawData(@NotNull String tellRawData) {
-            this.tellRawData = tellRawData;
+        public Builder tellRawData(@NotNull Message message) {
+            this.message = message;
             return this;
         }
 
@@ -246,12 +233,12 @@ public final class AurionPacket implements Named, Serializable {
             return displayName;
         }
 
-        public String getTellRawData() {
-            return tellRawData;
+        public Message getMessage() {
+            return message;
         }
 
         public AurionPacket build() {
-            return new AurionPacket(this.type, this.source, this.player, this.channel, this.displayName, this.tellRawData);
+            return new AurionPacket(this.type, this.source, this.player, this.channel, this.displayName, this.message);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.mineaurion.aurionchat.common.config.impl;
 
 import com.mineaurion.aurionchat.common.config.MessageProcessorConfig;
-import com.mineaurion.aurionchat.common.message.impl.SchemeProcessor;
+import com.mineaurion.aurionchat.common.processor.SchemeProcessor;
 
 public final class SchemeConverterConfig extends MessageProcessorConfig {
     public static final String KEY = "scheme";

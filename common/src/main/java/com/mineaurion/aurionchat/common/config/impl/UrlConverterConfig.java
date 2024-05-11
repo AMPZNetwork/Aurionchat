@@ -1,7 +1,7 @@
 package com.mineaurion.aurionchat.common.config.impl;
 
 import com.mineaurion.aurionchat.common.config.MessageProcessorConfig;
-import com.mineaurion.aurionchat.common.message.impl.UrlMessageProcessor;
+import com.mineaurion.aurionchat.common.processor.UrlMessageProcessor;
 
 public final class UrlConverterConfig extends MessageProcessorConfig {
     public static final String KEY = "urls";

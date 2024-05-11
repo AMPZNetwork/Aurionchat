@@ -1,6 +1,6 @@
 package com.mineaurion.aurionchat.common.config;
 
-import com.mineaurion.aurionchat.common.message.MessageProcessor;
+import com.mineaurion.aurionchat.common.processor.MessageProcessor;
 
 import java.util.List;
 

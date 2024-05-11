@@ -1,4 +1,4 @@
-package com.mineaurion.aurionchat.common.message;
+package com.mineaurion.aurionchat.api.model;
 
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;

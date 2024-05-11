@@ -1,7 +1,7 @@
 package com.mineaurion.aurionchat.common.config.impl;
 
 import com.mineaurion.aurionchat.common.config.MessageProcessorConfig;
-import com.mineaurion.aurionchat.common.message.impl.MarkdownMessageProcessor;
+import com.mineaurion.aurionchat.common.processor.MarkdownMessageProcessor;
 
 public final class MarkdownConverterConfig extends MessageProcessorConfig {
     public static final String KEY = "markdown";
