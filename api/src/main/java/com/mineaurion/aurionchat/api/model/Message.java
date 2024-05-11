@@ -1,11 +1,15 @@
 package com.mineaurion.aurionchat.api.model;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.intellij.lang.annotations.MagicConstant;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class Message {
@@ -21,13 +25,33 @@ public final class Message {
         return components.stream().filter(component -> component.features.contains(type));
     }
 
+    public String getDisplayString() {
+        return components.stream()
+                .map(Component::getContent)
+                .collect(Collectors.joining());
+    }
+
+    public TextComponent kyori() {
+        TextComponent.Builder comp = net.kyori.adventure.text.Component.text();
+        for (Component component : components) {
+            TextComponent txt = net.kyori.adventure.text.Component.text(component.content)
+                    .color(component.color);
+            if (component.decoration != null)
+                txt = txt.decoration(component.decoration, true);
+            if (component.url != null)
+                txt = txt.clickEvent(ClickEvent.openUrl(component.url));
+            comp.append(txt);
+        }
+        return comp.build();
+    }
+
     public static final class Component implements Cloneable {
         public final Set<String> features = new HashSet<>();
         public final Message message;
         private String content;
-        private TextColor color;
-        private TextDecoration decoration;
-        private String url;
+        private @Nullable TextColor color;
+        private @Nullable TextDecoration decoration;
+        private @Nullable String url;
 
         public Component(Message message) {
             this.message = message;
@@ -102,6 +126,11 @@ public final class Message {
         public Component setUrl(String url) {
             this.url = url;
             return this;
+        }
+
+        @Override
+        public String toString() {
+            return content;
         }
 
         @Override

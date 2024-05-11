@@ -1,6 +1,7 @@
 package com.mineaurion.aurionchat.common;
 
 import com.mineaurion.aurionchat.api.AurionPacket;
+import com.mineaurion.aurionchat.api.model.Message;
 import com.mineaurion.aurionchat.common.config.ConfigurationAdapter;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -78,19 +79,20 @@ public class ChatService {
     private DeliverCallback consumer(){
         return (consumerTag, delivery) -> {
             AurionPacket packet = AurionPacket.fromJson(new String(delivery.getBody(), StandardCharsets.UTF_8));
-            Component messageDeserialize = packet.getComponent();
             if(this.config.getBoolean("options.spy", false)){
                 plugin.getlogger().info(packet.getDisplayString());
             }
+            Message message = packet.getMessage();
 
             plugin.getAurionChatPlayers().forEach((uuid, aurionChatPlayers) -> {
+                Component messageComponent = message.kyori();
                 if(packet.getType().equals(AurionPacket.Type.AUTO_MESSAGE) && this.config.getBoolean("options.automessage", false)){
                     if(aurionChatPlayers.hasPermission("aurionchat.automessage." + packet.getChannelName())){
-                        aurionChatPlayers.sendMessage(messageDeserialize);
+                        aurionChatPlayers.sendMessage(messageComponent);
                     }
                 } else if (packet.getType().equals(AurionPacket.Type.CHAT)) {
                     if(aurionChatPlayers.getChannels().contains(packet.getChannelName())){
-                        aurionChatPlayers.sendMessage(messageDeserialize);
+                        aurionChatPlayers.sendMessage(messageComponent);
                     }
                 } else {
                     plugin.getlogger().warn("Received message with the type " + packet.getType() + " and the message was " + packet + ". It won't be processed");
