@@ -79,10 +79,9 @@ public class ChatService {
     private DeliverCallback consumer(){
         return (consumerTag, delivery) -> {
             AurionPacket packet = AurionPacket.fromJson(new String(delivery.getBody(), StandardCharsets.UTF_8));
-            if(this.config.getBoolean("options.spy", false)){
-                plugin.getlogger().info(packet.getDisplayString());
-            }
             Message message = packet.getMessage();
+            if(this.config.getBoolean("options.spy", false))
+                plugin.getlogger().info(message.getDisplayString());
 
             plugin.getAurionChatPlayers().forEach((uuid, aurionChatPlayers) -> {
                 Component messageComponent = message.kyori();
